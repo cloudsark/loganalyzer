@@ -28,20 +28,8 @@ var requestCmd = &cobra.Command{
 	Long: `The request line contains a great deal of useful information such as the method used by the client
 and the resource requested by the client`,
 	Run: func(cmd *cobra.Command, args []string) {
-		topRequest(cmd)
+		logalizer.TopRequestCmd(&filename)
 	},
-}
-
-func topRequest(cmd *cobra.Command) {
-	fileName := &filename
-	var reqList []string
-	F := logalizer.ReadFile(*fileName)
-	_, _, _, _, _, _, _, requests := logalizer.ParseLog(F)
-	for _, request := range requests {
-		reqList = append(reqList, request)
-	}
-	result := logalizer.TopOccurr(reqList)
-	logalizer.TablePrint("Method", "Count", result)
 }
 
 func init() {

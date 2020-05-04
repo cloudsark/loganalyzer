@@ -27,21 +27,8 @@ var methodCmd = &cobra.Command{
 	Short: "Print Top 10 HTTP methods used",
 	Long:  `HTTP defines a set of request methods to indicate the desired action to be performed for a given resource`,
 	Run: func(cmd *cobra.Command, args []string) {
-		topMethod(cmd)
+		logalizer.TopMethodCmd(&filename)
 	},
-}
-
-func topMethod(cmd *cobra.Command) {
-	fileName := &filename
-	var methodList []string
-	F := logalizer.ReadFile(*fileName)
-	_, _, methods, _, _, _, _, _ := logalizer.ParseLog(F)
-	for _, method := range methods {
-		methodList = append(methodList, method)
-	}
-	result := logalizer.TopOccurr(methodList)
-	logalizer.TablePrint("Method", "Count", result)
-
 }
 
 func init() {

@@ -28,18 +28,8 @@ var ipCmd = &cobra.Command{
 	Long: `Find Top 10 IP Addresses Accessing Your web server,
 it helps you to quicly identify abuse`,
 	Run: func(cmd *cobra.Command, args []string) {
-		topIP(cmd)
+		logalizer.TopIpCmd(&filename)
 	},
-}
-
-// Print top 10
-func topIP(cmd *cobra.Command) {
-	fileName := &filename
-
-	F := logalizer.ReadFile(*fileName)
-	ips, _, _, _, _, _, _, _ := logalizer.ParseLog(F)
-	ip := logalizer.TopOccurr(ips)
-	logalizer.TablePrint("IP", "Count", ip)
 }
 
 func init() {

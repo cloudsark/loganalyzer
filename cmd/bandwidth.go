@@ -27,20 +27,10 @@ var bandwidthCmd = &cobra.Command{
 	Short: "Print total bandwidth",
 	Long:  `print total bandwidth , calculation done by sum of the size of the objects returned to the client`,
 	Run: func(cmd *cobra.Command, args []string) {
-		totalBandwidth(cmd)
+		logalizer.TotalBandwidthCmd(&filename)
 	},
 }
 
-// print Total bandwidth , calculation done by sum of the size of the objects returned to the client
-func totalBandwidth(cmd *cobra.Command) {
-	fileName := &filename
-
-	F := logalizer.ReadFile(*fileName)
-	_, _, _, _, size, _, _, _ := logalizer.ParseLog(F)
-	totalsize := logalizer.TotalBandwidth(size)
-	logalizer.TabelBandwidth(totalsize)
-
-}
 func init() {
 	rootCmd.AddCommand(bandwidthCmd)
 }

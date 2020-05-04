@@ -26,24 +26,11 @@ var statusCmd = &cobra.Command{
 	Use:   "status",
 	Short: "Print Top 10 status codes",
 	Long: `the status code that the server sends back to the client. This information is very valuable, because it reveals whether the request
-resulted in a successful response (codes beginning in 2),
-a redirection (codes beginning in 3), an error caused by the client (codes beginning in 4), or an error in the server (codes beginning in 5)`,
+resulted in a successful response (codes beginning in 2), a redirection (codes beginning in 3), an error caused by the client (codes beginning in 4), 
+or an error in the server (codes beginning in 5)`,
 	Run: func(cmd *cobra.Command, args []string) {
-		topStatus(cmd)
+		logalizer.TopStatusCmd(&filename)
 	},
-}
-
-func topStatus(cmd *cobra.Command) {
-	fileName := &filename
-	var codeList []string
-	F := logalizer.ReadFile(*fileName)
-	_, _, _, response, _, _, _, _ := logalizer.ParseLog(F)
-	for _, code := range response {
-		codeList = append(codeList, code[:3])
-	}
-
-	result := logalizer.TopOccurr(codeList)
-	logalizer.TablePrint("Status", "Count", result)
 }
 
 func init() {
