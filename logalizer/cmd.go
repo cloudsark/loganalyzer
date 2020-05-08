@@ -3,7 +3,7 @@ package logalizer
 // TotlaBandwidthCmd ... returns total bandwidth in KB , MB and GB
 func TotalBandwidthCmd(filename *string) {
 	F := ReadFile(*filename)
-	_, _, _, _, size, _, _, _ := ParseLog(F)
+	size := ParseLog("size", F)
 	totalsize := TotalBandwidth(size)
 	TabelBandwidth(totalsize)
 }
@@ -11,7 +11,7 @@ func TotalBandwidthCmd(filename *string) {
 // TopIpCmd .. returns top 10 IPs
 func TopIpCmd(filename *string) {
 	F := ReadFile(*filename)
-	ips, _, _, _, _, _, _, _ := ParseLog(F)
+	ips := ParseLog("ip", F)
 	ip := TopOccurr(ips)
 	TablePrint("IP", "Count", ip)
 }
@@ -20,7 +20,7 @@ func TopIpCmd(filename *string) {
 func TopMethodCmd(filename *string) {
 	var list []string
 	F := ReadFile(*filename)
-	_, _, methods, _, _, _, _, _ := ParseLog(F)
+	methods := ParseLog("method", F)
 	for _, method := range methods {
 		list = append(list, method)
 	}
@@ -32,7 +32,7 @@ func TopMethodCmd(filename *string) {
 func TopRequestCmd(filename *string) {
 	var list []string
 	F := ReadFile(*filename)
-	_, _, _, _, _, _, _, requests := ParseLog(F)
+	requests := ParseLog("request", F)
 	for _, request := range requests {
 		list = append(list, request)
 	}
@@ -44,11 +44,23 @@ func TopRequestCmd(filename *string) {
 func TopStatusCmd(filename *string) {
 	var list []string
 	F := ReadFile(*filename)
-	_, _, _, response, _, _, _, _ := ParseLog(F)
+	response := ParseLog("response", F)
 	for _, code := range response {
 		list = append(list, code[:3])
 	}
 
 	result := TopOccurr(list)
 	TablePrint("Status", "Count", result)
+}
+
+
+func ExecuteCustomRegex(regex *string, filename *string){
+	var list []string
+	F := ReadFile(*filename)
+	matches := ParseCustom(*regex, F)
+	for _, match := range matches {
+		list = append(list, match)
+	}
+	result := TopOccurr(list)
+	TablePrint("Match", "Count", result)
 }

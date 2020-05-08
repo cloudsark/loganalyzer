@@ -31,6 +31,7 @@ var filename string
 var rootCmd = &cobra.Command{
 	Use:   "loganalyzer",
 	Short: "Analyze access logs",
+	Version: "0.2",  // hard code that for now
 	Long:  `Access log analyzer can be used to analyze web servers , load balancers access logs `,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
