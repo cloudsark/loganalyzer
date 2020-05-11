@@ -2,6 +2,8 @@ package logalizer
 
 import (
 	"bufio"
+	"errors"
+	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -39,27 +41,43 @@ func findMatch(log []string, exp *regexp.Regexp) []string {
 	return matches
 }
 
-// ParseLog ... find all matches in the log file
-func ParseLog(log []string) (ipMatch, dateMatch, requestMatch, responseMatch, sizeMatch, referrerMatch, agentMatch, fullReqMatch []string) {
-	ip := regexp.MustCompile(`\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`)
-	date := regexp.MustCompile(`\[\s*(\d+/\D+/.*?)\]`)
-	request := regexp.MustCompile(`^GET|POST|UPDATE|HEAD|DELETE`)
-	response := regexp.MustCompile(`\d+ (\d+)`)
-	size := regexp.MustCompile(`([0-9]{1,3}) \"`)
-	referrer := regexp.MustCompile(`"([^"]*)" \"`)
-	agent := regexp.MustCompile(`" "([^"]*)"`)
-	fullReq := regexp.MustCompile(`(GET|POST|UPDATE|HEAD|DELETE) \/.*?\.[\w:]+`)
-	ipMatch = findMatch(log, ip)
-	dateMatch = findMatch(log, date)
-	requestMatch = findMatch(log, request)
-	responseMatch = findMatch(log, response)
-	sizeMatch = findMatch(log, size)
-	referrerMatch = findMatch(log, referrer)
-	agentMatch = findMatch(log, agent)
-	fullReqMatch = findMatch(log, fullReq)
+// find matches for a certain field in access log
+func ParseLog(field string, log []string) []string {
 
-	return
+	var fieldRegex *regexp.Regexp
+
+	switch field {
+	case "ip":
+		fieldRegex = regexp.MustCompile(`\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`)
+	case "date":
+		fieldRegex = regexp.MustCompile(`\[\s*(\d+/\D+/.*?)\]`)
+	case "method":
+		fieldRegex = regexp.MustCompile(`^GET|POST|UPDATE|HEAD|DELETE`)
+	case "response":
+		fieldRegex = regexp.MustCompile(`\d+ (\d+)`)
+	case "size":
+		fieldRegex = regexp.MustCompile(`([0-9]{1,3}) \"`)
+	case "referrer":
+		fieldRegex = regexp.MustCompile(`"([^"]*)" \"`)
+	case "agent":
+		fieldRegex = regexp.MustCompile(`" "([^"]*)"`)
+	case "fullReq":
+		fieldRegex = regexp.MustCompile(`(GET|POST|UPDATE|HEAD|DELETE) \/.*?\.[\w:]+`)
+	default:
+		err := errors.New("Field not supported!")
+		fmt.Printf("%v \n", err)
+		os.Exit(1)
+	}
+	return findMatch(log, fieldRegex)
 }
+
+
+// Parse a custom field from the user
+func ParseCustom(regexString string, log []string) []string{
+	fieldRegex := regexp.MustCompile(regexString)
+	return findMatch(log, fieldRegex)
+}
+
 
 // TopOccurr ... top occurrence
 func TopOccurr(field []string) map[string]int {
