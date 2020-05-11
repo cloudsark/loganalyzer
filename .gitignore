@@ -17,3 +17,4 @@ vendor
 .project
 cache
 *.log
+*.exe
