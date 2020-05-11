@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/mohtork/loganalyzer/cmd"
+import "github.com/cloudsark/loganalyzer/cmd"
 
 func main() {
 	cmd.Execute()

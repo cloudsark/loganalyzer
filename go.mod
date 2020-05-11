@@ -1,4 +1,4 @@
-module github.com/mohtork/loganalyzer
+module github.com/cloudsark/loganalyzer
 
 go 1.13
 

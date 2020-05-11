@@ -16,7 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/mohtork/loganalyzer/logalizer"
+	"github.com/cloudsark/loganalyzer/logalizer"
 
 	"github.com/spf13/cobra"
 )
