@@ -61,23 +61,21 @@ func ParseLog(field string, log []string) []string {
 		fieldRegex = regexp.MustCompile(`"([^"]*)" \"`)
 	case "agent":
 		fieldRegex = regexp.MustCompile(`" "([^"]*)"`)
-	case "fullReq":
+	case "request":
 		fieldRegex = regexp.MustCompile(`(GET|POST|UPDATE|HEAD|DELETE) \/.*?\.[\w:]+`)
 	default:
-		err := errors.New("Field not supported!")
+		err := errors.New("field not supported!")
 		fmt.Printf("%v \n", err)
 		os.Exit(1)
 	}
 	return findMatch(log, fieldRegex)
 }
 
-
 // Parse a custom field from the user
-func ParseCustom(regexString string, log []string) []string{
+func ParseCustom(regexString string, log []string) []string {
 	fieldRegex := regexp.MustCompile(regexString)
 	return findMatch(log, fieldRegex)
 }
-
 
 // TopOccurr ... top occurrence
 func TopOccurr(field []string) map[string]int {
