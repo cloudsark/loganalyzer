@@ -5,10 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/oschwald/geoip2-golang"
 )
 
 // ReadFile ... Read access.log file to preapre for analysis
@@ -48,7 +51,7 @@ func ParseLog(field string, log []string) []string {
 
 	switch field {
 	case "ip":
-		fieldRegex = regexp.MustCompile(`\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`)
+		fieldRegex = regexp.MustCompile(`^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`)
 	case "date":
 		fieldRegex = regexp.MustCompile(`\[\s*(\d+/\D+/.*?)\]`)
 	case "method":
@@ -101,4 +104,20 @@ func TotalBandwidth(slice []string) int {
 	}
 
 	return sum
+}
+
+// IP2Geo translate ip to Country name
+func IP2Geo(IP string) string {
+	db, err := geoip2.Open("db/GeoLite2-Country.mmdb")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer db.Close()
+	ip := net.ParseIP(IP)
+	record, err := db.Country(ip)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return record.Country.Names["en"]
 }

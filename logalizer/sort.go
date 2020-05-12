@@ -19,7 +19,6 @@ func SortMapByValue(values map[string]int) []kv {
 	sort.Slice(ss, func(i, j int) bool {
 		return ss[i].Value > ss[j].Value
 	})
-	//return ss[:10]
 	if len(ss) < 10 {
 		return ss[:len(ss)]
 	} else {

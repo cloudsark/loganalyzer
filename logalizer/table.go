@@ -21,6 +21,22 @@ func TablePrint(field, field1 string, values map[string]int) {
 	t.Render()
 }
 
+// TablePrintIP2Loc prints top 10 IPs with their locations
+func TablePrintIP2Loc(field, field1, field2 string, values map[string]int) {
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{field, field1, field2})
+
+	for _, kv := range SortMapByValue(values) {
+		location := IP2Geo(kv.Key)
+		t.AppendRows([]table.Row{
+			{kv.Key, kv.Value, location},
+		})
+	}
+	t.SetStyle(table.StyleColoredBright)
+	t.Render()
+}
+
 // TableBandwidth ... bandwidth table
 func TabelBandwidth(totalSize int) {
 	KB := totalSize / 1024

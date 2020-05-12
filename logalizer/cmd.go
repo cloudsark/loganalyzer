@@ -16,6 +16,14 @@ func TopIpCmd(filename *string) {
 	TablePrint("IP", "Count", ip)
 }
 
+// TopIP2LocCmd returns top 10 IPs with their locations
+func TopIP2LocCmd(filename *string) {
+	F := ReadFile(*filename)
+	ips := ParseLog("ip", F)
+	ip := TopOccurr(ips)
+	TablePrintIP2Loc("IP", "Count", "Location", ip)
+}
+
 // TopMehodCmd ... returns top 10 methods
 func TopMethodCmd(filename *string) {
 	var list []string
@@ -53,8 +61,7 @@ func TopStatusCmd(filename *string) {
 	TablePrint("Status", "Count", result)
 }
 
-
-func ExecuteCustomRegex(regex *string, filename *string){
+func ExecuteCustomRegex(regex *string, filename *string) {
 	var list []string
 	F := ReadFile(*filename)
 	matches := ParseCustom(*regex, F)
