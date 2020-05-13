@@ -18,7 +18,7 @@ Analyze access logs (Apache, nginx , load balancers) for quick troubleshoot
 
 #### Install
 
-Download the most recent release binaries for your OS from https://github.com/mohtork/loganalyzer/releases
+Download the most recent release binaries for your OS from https://github.com/cloudsark/loganalyzer/releases
 
 Install each binary as follows,
 
@@ -79,12 +79,33 @@ Use "loganalyzer top [command] --help" for more information about a command.
 ```bash
 $ loganalyzer -f access.log top ip
 ```
+3. Print Top 10 IP addresses accessing your web server with their location
+```bash
+$ loganalyzer -f access.log top ip2loc
+```
+4. Print Top 10 HTTP methods used
+```bash
+$ loganalyzer -f access.log top method
+```
+5. Print Top 10 requests
+```bash
+$ loganalyzer -f access.log top request
+```
+6. Print Top 10 status codes
+```bash
+$ loganalyzer -f access.log top status
+```
 
 
+##### bandwidth
+1. Pring total bandwidth
+```bash
+$ loganalyzer -f access.log bandwidth
+```
 
-
-## To Do
-- Top IPs location
-- Searching for a Specific Time Frame
-- Show IPs for top requests
+##### custom
+1. Search for a custom field. Provide the regex for the field and loganalyzer will look for it
+```bash
+$ loganalyzer -f apache-daily-access.log custom --field-regex '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+```
 
