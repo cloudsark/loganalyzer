@@ -45,9 +45,41 @@ Flags:
   -f, --file string   access log filename
   -h, --help          help for loganalyzer
   -v, --version       version for loganalyzer
-
 Use "loganalyzer [command] --help" for more information about a command.
 ```
+
+#### Run
+
+##### top
+
+1. Get help
+```bash
+$ loganalyzer top --help
+Get useful information about your web server, top command is used to print top 10 IPs, methods, requests and status codes
+
+Usage:
+  loganalyzer top [command]
+
+Available Commands:
+  ip          Print Top 10 IP addresses accessing your web server
+  ip2loc      Print Top 10 IP addresses accessing your web server with their location
+  method      Print Top 10 HTTP methods used
+  request     Print Top 10 requests
+  status      Print Top 10 status codes
+
+Flags:
+  -h, --help   help for top
+
+Global Flags:
+  -f, --file string   access log filename
+
+Use "loganalyzer top [command] --help" for more information about a command.
+```
+2. Print Top 10 IP addresses accessing your web server
+```bash
+$ loganalyzer -f access.log top ip
+```
+
 
 
 
