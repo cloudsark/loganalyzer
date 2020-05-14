@@ -98,7 +98,7 @@ $ loganalyzer -f access.log top status
 
 
 ##### bandwidth
-1. Pring total bandwidth
+1. Print total bandwidth
 ```bash
 $ loganalyzer -f access.log bandwidth
 ```
