@@ -1,5 +1,7 @@
 package logalizer
 
+import "strings"
+
 // TotlaBandwidthCmd ... returns total bandwidth in KB , MB and GB
 func TotalBandwidthCmd(filename *string) {
 	F := ReadFile(*filename)
@@ -46,6 +48,19 @@ func TopRequestCmd(filename *string) {
 	}
 	result := TopOccurr(list)
 	TablePrint("Request", "Count", result)
+}
+
+// TopReferrerCmd returns top 10 referrers
+func TopReferrerCmd(filename *string) {
+	var list []string
+	F := ReadFile(*filename)
+	referrers := ParseLog("referrer", F)
+	for _, referrer := range referrers {
+		referrer = strings.Trim(referrer, "\" ")
+		list = append(list, referrer)
+	}
+	result := TopOccurr(list)
+	TablePrint("Referrer", "Count", result)
 }
 
 // TopStatusCmd ... returns top 10 status codes
