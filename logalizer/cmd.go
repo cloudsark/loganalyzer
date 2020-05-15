@@ -76,6 +76,25 @@ func TopStatusCmd(filename *string) {
 	TablePrint("Status", "Count", result)
 }
 
+// TopAgentCmd returns top 10 agents
+func TopAgentCmd(filename *string) {
+	var list []string
+	F := ReadFile(*filename)
+	agents := ParseLog("agent", F)
+	for _, agent := range agents {
+		agent = strings.Trim(agent, "\" ")
+		// table width problem if length of agent is too long
+		// limit width to 90 still show importatn data
+		if len(agent) >= 100 {
+			list = append(list, agent[:90])
+		} else {
+			list = append(list, agent)
+		}
+	}
+	result := TopOccurr(list)
+	TablePrint("Agent", "Count", result)
+}
+
 func ExecuteCustomRegex(regex *string, filename *string) {
 	var list []string
 	F := ReadFile(*filename)
