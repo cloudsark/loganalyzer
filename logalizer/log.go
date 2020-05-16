@@ -45,9 +45,11 @@ func findMatch(log []string, exp *regexp.Regexp) []string {
 }
 
 // find matches for a certain field in access log
-func ParseLog(field string, log []string) []string {
+func ParseLog(filename string, field string) []string {
 
 	var fieldRegex *regexp.Regexp
+
+	logLines := ReadFile(filename)
 
 	switch field {
 	case "ip":
@@ -71,7 +73,7 @@ func ParseLog(field string, log []string) []string {
 		fmt.Printf("%v \n", err)
 		os.Exit(1)
 	}
-	return findMatch(log, fieldRegex)
+	return findMatch(logLines, fieldRegex)
 }
 
 // Parse a custom field from the user
