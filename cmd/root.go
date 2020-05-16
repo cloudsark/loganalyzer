@@ -29,10 +29,10 @@ var filename string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "loganalyzer",
-	Short: "Analyze access logs",
-	Version: "0.2",  // hard code that for now
-	Long:  `Access log analyzer can be used to analyze web servers , load balancers access logs `,
+	Use:     "loganalyzer",
+	Short:   "Analyze access logs",
+	Version: "0.2", // hard code that for now
+	Long:    `Access log analyzer can be used to analyze web servers , load balancers access logs `,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			return errors.New("Something's wrong--perhaps a missing command")
