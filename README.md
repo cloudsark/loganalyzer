@@ -108,8 +108,3 @@ $ loganalyzer -f access.log bandwidth
 ```bash
 $ loganalyzer -f apache-daily-access.log custom --field-regex '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 ```
-
-## Support-us
-If this project help you, you can support us on paypal :) 
-
-[![paypal](https://linuxdirection.s3-eu-west-1.amazonaws.com/support-paypal-2.png)](https://paypal.me/cloudsark?locale.x=en_US)
